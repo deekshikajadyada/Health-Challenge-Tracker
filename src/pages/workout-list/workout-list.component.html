@@ -42,7 +42,7 @@
         <!-- No Data Message -->
         <ng-template #noData>
             <div class="text-center py-10">
-                <p class="text-gray-700 text-lg">No workout data available. Add workout data to view it here.</p>
+                <p class="text-gray-700 text-lg">No workout data available. Add <span [routerLink]="'/add-workout'" class="font-bold underline cursor-pointer">workout data</span> to view it here.</p>
             </div>
         </ng-template>
     </div>

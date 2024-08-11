@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-workout-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,RouterLink],
   templateUrl: './workout-list.component.html',
   styleUrls: ['./workout-list.component.css'],
 })
