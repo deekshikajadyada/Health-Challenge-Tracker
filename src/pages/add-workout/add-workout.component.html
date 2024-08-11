@@ -1,0 +1,60 @@
+<div class="bg-slate-600 h-screen flex flex-col gap-5">
+  <form [formGroup]="workOutForm" (ngSubmit)="onSubmit()" class="p-5">
+    <div class="flex gap-10 bg-slate-500 p-5 w-fit mx-auto mt-10 rounded-lg">
+
+      <!-- Username Details: -->
+      <div class="flex gap-2 items-center">
+        <label for="username">User Name:</label>
+        <div class="flex flex-col">
+          <input placeholder="User Name" id="username" formControlName="username" class="rounded-md p-2" />
+          <div *ngIf="workOutForm.get('username')?.invalid && workOutForm.get('username')?.touched"
+            class="text-red-500">
+            <div *ngIf="workOutForm.get('username')?.errors?.['required']">User Name is required.</div>
+            <div *ngIf="workOutForm.get('username')?.errors?.['minlength']">User Name must be at least 3 characters
+              long.</div>
+            <div *ngIf="workOutForm.get('username')?.errors?.['pattern']">Please enter a valid Username.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Workout Type Details: -->
+      <div class="flex gap-2 items-center">
+        <label for="wtype">Workout Type:</label>
+        <div class="flex flex-col">
+          <select id="wtype" formControlName="wtype" class="rounded-md p-2">
+            <option value="">Select Workout Type</option>
+            <option value="Cardio">Cardio</option>
+            <option value="Strength">Strength</option>
+            <option value="Flexibility">Flexibility</option>
+            <option value="Balance">Balance</option>
+            <option value="Endurance">Endurance</option>
+          </select>
+          <div *ngIf="workOutForm.get('wtype')?.invalid && workOutForm.get('wtype')?.touched" class="text-red-500">
+            <div *ngIf="workOutForm.get('wtype')?.errors?.['required']">Workout Type is required.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Workout Minutes Details: -->
+      <div class="flex gap-2 items-center">
+        <label for="duration">Workout minutes:</label>
+        <div class="flex flex-col">
+          <input placeholder="Workout minutes" id="duration" formControlName="duration" class="rounded-md p-2" />
+          <div *ngIf="workOutForm.get('duration')?.invalid && workOutForm.get('duration')?.touched"
+            class="text-red-500">
+            <div *ngIf="workOutForm.get('duration')?.errors?.['required']">Workout minutes are required.</div>
+            <div *ngIf="workOutForm.get('duration')?.errors?.['pattern']">Please enter a valid number.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <button type="submit" [ngClass]="{
+        'bg-blue-700 ': workOutForm.valid,
+        'bg-gray-400 cursor-not-allowed': workOutForm.invalid
+      }" class="flex text-white p-2 rounded-lg ml-[45%] mt-5" [disabled]="workOutForm.invalid">
+      Add Workout
+    </button>
+  </form>
+</div>

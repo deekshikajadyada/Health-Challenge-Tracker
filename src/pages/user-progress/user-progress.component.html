@@ -1,0 +1,11 @@
+<div class="bg-slate-600 h-screen  p-4">
+    <div class="mx-auto bg-slate-400 border-2 p-4 rounded-lg">
+        <div class="mb-4">
+            <label for="userSelect" class="mr-2">Select User:</label>
+            <select id="userSelect" (change)="onUserChange($event)" class="p-2 border border-gray-300 rounded">
+                <option *ngFor="let user of users" [value]="user">{{ user }}</option>
+            </select>
+        </div>
+        <canvas id="myChart" height="40"></canvas>
+    </div>
+</div>
