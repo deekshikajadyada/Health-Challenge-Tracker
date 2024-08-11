@@ -1,12 +1,14 @@
 <div class="bg-slate-600 h-screen">
-        <div class="mx-auto bg-slate-400 w-fit h-fit border-2 p-4 rounded-lg">
-            <!-- Search Bar -->
-            <div class="mb-4">
-                <input type="text" placeholder="Search by username..." class="p-2 border border-gray-300 rounded w-full"
-                    [(ngModel)]="searchTerm" (input)="filterWorkouts()" />
-            </div>
-        
-            <table class="min-w-full bg-white border  border-gray-200 rounded-lg translate-x-[50%  ]">
+    <div class="mx-auto bg-slate-400 w-fit h-fit border-2 p-4 rounded-lg">
+        <!-- Search Bar -->
+        <div class="mb-4">
+            <input type="text" placeholder="Search by username..." class="p-2 border border-gray-300 rounded w-full"
+                [(ngModel)]="searchTerm" (input)="filterWorkouts()" />
+        </div>
+
+        <!-- Conditional Rendering -->
+        <ng-container *ngIf="paginatedWorkouts && paginatedWorkouts.length > 0; else noData">
+            <table class="min-w-full bg-white border border-gray-200 rounded-lg ">
                 <thead>
                     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                         <th class="py-3 px-6 text-left">Username</th>
@@ -22,10 +24,11 @@
                     </tr>
                 </tbody>
             </table>
-        
+
             <!-- Pagination Controls -->
             <div class="flex justify-between items-center mt-4">
-                <button class="bg-blue-700 text-white py-2 px-4 rounded" [disabled]="currentPage === 1" (click)="prevPage()">
+                <button class="bg-blue-700 text-white py-2 px-4 rounded" [disabled]="currentPage === 1"
+                    (click)="prevPage()">
                     Previous
                 </button>
                 <span>Page {{ currentPage }} of {{ totalPages }}</span>
@@ -34,5 +37,13 @@
                     Next
                 </button>
             </div>
-        </div>
+        </ng-container>
+
+        <!-- No Data Message -->
+        <ng-template #noData>
+            <div class="text-center py-10">
+                <p class="text-gray-700 text-lg">No workout data available. Add workout data to view it here.</p>
+            </div>
+        </ng-template>
+    </div>
 </div>

@@ -1,20 +1,17 @@
 <div class="max-h-screen overflow-hidden">
   <div class="flex bg-blue-400 w-full p-4 gap-5 h-fit">
-    <p [routerLink]="'add-workout'"
-      [ngClass]="{'bg-blue-700': isActive('/add-workout'), 'text-white': isActive('/add-workout')}"
-      class="p-2 rounded-md cursor-pointer">
+    <button mat-button [routerLink]="'/add-workout'" [ngClass]="{'bg-blue-700': isActive('/add-workout'), 'text-white': isActive('/add-workout')}"
+      class="p-2 rounded-md">
       Add Workout
-    </p>
-    <p [routerLink]="'workout-list'"
-      [ngClass]="{'bg-blue-700': isActive('/workout-list'), 'text-white': isActive('/workout-list')}"
-      class="p-2 rounded-md cursor-pointer">
+    </button>
+    <button mat-button [routerLink]="'/workout-list'" [ngClass]="{'bg-blue-700': isActive('/workout-list'), 'text-white': isActive('/workout-list')}"
+      class="p-2 rounded-md">
       Workout List
-    </p>
-    <p [routerLink]="'workout-chart'"
-      [ngClass]="{'bg-blue-700': isActive('/workout-chart'), 'text-white': isActive('/workout-chart')}"
-      class="p-2 rounded-md cursor-pointer">
+    </button>
+    <button mat-button [routerLink]="'/workout-chart'" [ngClass]="{'bg-blue-700': isActive('/workout-chart'), 'text-white': isActive('/workout-chart')}"
+      class="p-2 rounded-md">
       Workout Chart
-    </p>
+    </button>
   </div>
   <router-outlet></router-outlet>
 </div>

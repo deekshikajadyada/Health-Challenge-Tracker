@@ -1,20 +1,48 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-add-workout',
   standalone: true,
-  imports: [RouterOutlet, FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [
+    RouterOutlet,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatIconModule,
+  ],
   templateUrl: './add-workout.component.html',
   styleUrls: ['./add-workout.component.css'],
 })
 export class AddWorkoutComponent {
   workOutForm = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-Z ]+$')]),
+    username: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.pattern('^[a-zA-Z ]+$'),
+    ]),
     wtype: new FormControl('', [Validators.required]),
-    duration: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
+    duration: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[0-9]+$'),
+    ]),
   });
 
   onSubmit() {
@@ -25,7 +53,9 @@ export class AddWorkoutComponent {
 
     const workoutData = this.workOutForm.value;
 
-    const duration = workoutData.duration ? workoutData.duration.toString() : '0';
+    const duration = workoutData.duration
+      ? workoutData.duration.toString()
+      : '0';
 
     const userData = JSON.parse(localStorage.getItem('userData') || '[]');
 

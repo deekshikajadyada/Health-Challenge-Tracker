@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-user-progress',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatButtonToggleModule],
   templateUrl: './user-progress.component.html',
   styleUrls: ['./user-progress.component.css'],
 })
@@ -13,6 +14,7 @@ export class UserProgressComponent implements OnInit {
   users: string[] = [];
   selectedUser: string = '';
   chart: any;
+  chartsFound: boolean = false;
 
   ngOnInit() {
     this.loadUsers();
@@ -29,10 +31,21 @@ export class UserProgressComponent implements OnInit {
 
   loadChartData(userName: string) {
     const workouts = this.getWorkouts();
-    const userWorkouts = workouts.find((user: any) => user.name === userName)?.workouts || [];
+    const userWorkouts =
+      workouts.find((user: any) => user.name === userName)?.workouts || [];
+
+    this.chartsFound = userWorkouts.length > 0;
+
+    if (!this.chartsFound) {
+      if (this.chart) {
+        this.chart.destroy();
+      }
+      return;
+    }
+
     const data = userWorkouts.map((workout: any) => ({
       type: workout.type,
-      minutes: workout.minutes
+      minutes: workout.minutes,
     }));
 
     Chart.register(...registerables);
@@ -44,26 +57,28 @@ export class UserProgressComponent implements OnInit {
     this.chart = new Chart('myChart', {
       type: 'bar',
       data: {
-        labels: data.map((workout: { type: any; }) => workout.type),
-        datasets: [{
-          label: `Workouts for ${userName}`,
-          data: data.map((workout: { minutes: any; }) => workout.minutes),
-          backgroundColor: '#42A5F5',
-          borderColor: '#1E88E5',
-          borderWidth: 1
-        }]
+        labels: data.map((workout: { type: any }) => workout.type),
+        datasets: [
+          {
+            label: `Workouts for ${userName}`,
+            data: data.map((workout: { minutes: any }) => workout.minutes),
+            backgroundColor: '#42A5F5',
+            borderColor: '#1E88E5',
+            borderWidth: 1,
+          },
+        ],
       },
       options: {
         responsive: true,
         scales: {
           x: {
-            beginAtZero: true
+            beginAtZero: true,
           },
           y: {
-            beginAtZero: true
-          }
-        }
-      }
+            beginAtZero: true,
+          },
+        },
+      },
     });
   }
 
@@ -73,6 +88,11 @@ export class UserProgressComponent implements OnInit {
   }
 
   getWorkouts() {
-    return JSON.parse(localStorage.getItem('userData') || '[]');
+    try {
+      return JSON.parse(localStorage.getItem('userData') || '[]');
+    } catch (error) {
+      console.error('Error parsing userData from localStorage', error);
+      return [];
+    }
   }
 }
