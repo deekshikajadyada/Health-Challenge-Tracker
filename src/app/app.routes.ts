@@ -4,7 +4,7 @@ import { AddWorkoutComponent } from '../pages/add-workout/add-workout.component'
 import { UserProgressComponent } from '../pages/user-progress/user-progress.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'workout-list', pathMatch: 'full' },
+  { path: '', redirectTo: 'add-workout', pathMatch: 'full' },
   { path: 'workout-list', component: WorkoutListComponent },
   { path: 'add-workout', component: AddWorkoutComponent },
   { path: 'workout-chart', component: UserProgressComponent },
