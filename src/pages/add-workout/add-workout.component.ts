@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Component} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -7,12 +7,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
+import {RouterOutlet} from '@angular/router';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-add-workout',
@@ -35,8 +35,7 @@ export class AddWorkoutComponent {
   workOutForm = new FormGroup({
     username: new FormControl('', [
       Validators.required,
-      Validators.minLength(3),
-      Validators.pattern('^[a-zA-Z ]+$'),
+      Validators.minLength(3)
     ]),
     wtype: new FormControl('', [Validators.required]),
     duration: new FormControl('', [
@@ -45,7 +44,9 @@ export class AddWorkoutComponent {
     ]),
   });
 
-  onSubmit() {
+  onSubmit(event: any) {
+
+    event.preventDefault();
     if (this.workOutForm.invalid) {
       this.workOutForm.markAllAsTouched(); // Mark all fields as touched to show validation errors
       return;
