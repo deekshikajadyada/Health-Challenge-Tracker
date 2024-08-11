@@ -1,25 +1,46 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-
-import { FormsModule } from '@angular/forms';
-import {RouterLink} from "@angular/router";
+import {CommonModule} from '@angular/common';
+import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {RouterLink} from '@angular/router';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 @Component({
   selector: 'app-workout-list',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterLink],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    MatTableModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule
+  ],
   templateUrl: './workout-list.component.html',
   styleUrls: ['./workout-list.component.css'],
 })
-export class WorkoutListComponent {
+export class WorkoutListComponent implements OnInit, AfterViewInit {
   searchTerm = '';
-  currentPage = 1;
   itemsPerPage = 5;
-  filteredWorkouts: any[] = [];
-  paginatedWorkouts: any[] = [];
-  totalPages: number = 0; // Declare totalPages
+  displayedColumns: string[] = ['username', 'wtype', 'duration'];
+  dataSource = new MatTableDataSource<any>();
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngOnInit() {
+    this.loadWorkouts();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  loadWorkouts() {
     this.filterWorkouts();
   }
 
@@ -36,34 +57,11 @@ export class WorkoutListComponent {
       }))
     );
 
-    this.filteredWorkouts = allWorkouts.filter(
+    const filteredWorkouts = allWorkouts.filter(
       (workout: { username: string; wtype: string; duration: number }) =>
         workout.username.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
 
-    this.paginateWorkouts();
-  }
-
-  paginateWorkouts() {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedWorkouts = this.filteredWorkouts.slice(startIndex, endIndex);
-    this.totalPages = Math.ceil(
-      this.filteredWorkouts.length / this.itemsPerPage
-    );
-  }
-
-  prevPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.paginateWorkouts();
-    }
-  }
-
-  nextPage() {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.paginateWorkouts();
-    }
+    this.dataSource.data = filteredWorkouts;
   }
 }

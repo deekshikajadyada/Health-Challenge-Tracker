@@ -6,12 +6,13 @@
       <div class="flex gap-2 items-center">
         <label for="username">User Name:</label>
         <div class="flex flex-col">
-          <input placeholder="User Name" id="username" formControlName="username" class="rounded-md p-2" />
+          <input placeholder="User Name" id="username" formControlName="username" class="rounded-md p-2"/>
           <div *ngIf="workOutForm.get('username')?.invalid && workOutForm.get('username')?.touched"
-            class="text-red-500">
+               class="text-red-500">
             <div *ngIf="workOutForm.get('username')?.errors?.['required']">User Name is required.</div>
             <div *ngIf="workOutForm.get('username')?.errors?.['minlength']">User Name must be at least 3 characters
-              long.</div>
+              long.
+            </div>
             <div *ngIf="workOutForm.get('username')?.errors?.['pattern']">Please enter a valid Username.</div>
           </div>
         </div>
@@ -39,9 +40,9 @@
       <div class="flex gap-2 items-center">
         <label for="duration">Workout minutes:</label>
         <div class="flex flex-col">
-          <input placeholder="Workout minutes" id="duration" formControlName="duration" class="rounded-md p-2" />
+          <input placeholder="Workout minutes" id="duration" formControlName="duration" class="rounded-md p-2"/>
           <div *ngIf="workOutForm.get('duration')?.invalid && workOutForm.get('duration')?.touched"
-            class="text-red-500">
+               class="text-red-500">
             <div *ngIf="workOutForm.get('duration')?.errors?.['required']">Workout minutes are required.</div>
             <div *ngIf="workOutForm.get('duration')?.errors?.['pattern']">Please enter a valid number.</div>
           </div>
